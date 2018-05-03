@@ -10,5 +10,5 @@ def baseline(mini_batch: np.ndarray, image_size):
     vgg.build(images)
     with tf.Session() as sess:
         feed_dict = {images: mini_batch}
-        prob = sess.run(vgg.prob, feed_dict=feed_dict)
-        return prob
+        fc8 = sess.run(vgg.fc8, feed_dict=feed_dict)
+        return fc8.shape
