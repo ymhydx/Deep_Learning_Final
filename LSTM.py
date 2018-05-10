@@ -1,5 +1,6 @@
 import tensorflow as tf
 import numpy as np
+import Padding
 
 
 class LSTM:
@@ -35,8 +36,23 @@ class LSTM:
         return output, optimizer
 
 
-input_vgg = tf.placeholder(tf.float32, shape=[100, 50, 1000])
-labels = tf.placeholder(tf.float32, shape=[100, 51])
+test_video = np.load('./test_video.npy')
+batch = [Padding.maximum_length_padding(test_video)]
+batch = np.array(batch)
+test_label = np.zeros([1, 51])
+print(batch.shape)
+print(test_label.shape)
+# # demo
+batch_size = 1
+input_vgg = tf.placeholder(tf.float32, shape=[batch_size, 1062, 1000])  # shape=[batch_size,num_frames,features]
+labels = tf.placeholder(tf.float32, shape=[batch_size, 51])  # shape=[batch_size, labels]
 lstm = LSTM(input_vgg, labels, 16, 'normal', 0.1, 'adam')
-output, optimizer = lstm.output, lstm.optimizer
-print(output.shape)
+# output, optimizer = lstm.output, lstm.optimizer
+# print(output.shape)
+
+initializer = tf.global_variables_initializer()
+
+with tf.Session() as sess:
+    sess.run(initializer)
+    output, _ = sess.run([lstm.output, lstm.optimizer], feed_dict={input_vgg: batch, labels: test_label})
+    print(output)
