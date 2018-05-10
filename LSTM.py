@@ -1,6 +1,6 @@
 import tensorflow as tf
 import numpy as np
-import Padding
+import Package
 
 
 class LSTM:
@@ -37,11 +37,12 @@ class LSTM:
 
 
 test_video = np.load('./test_video.npy')
-batch = [Padding.maximum_length_padding(test_video)]
+batch = [Package.maximum_length_padding(test_video)]
 batch = np.array(batch)
 test_label = np.zeros([1, 51])
 print(batch.shape)
 print(test_label.shape)
+print(Package.one_hot_encoder(10))
 # # demo
 batch_size = 1
 input_vgg = tf.placeholder(tf.float32, shape=[batch_size, 1062, 1000])  # shape=[batch_size,num_frames,features]

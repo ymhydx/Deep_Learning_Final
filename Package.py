@@ -7,3 +7,12 @@ def maximum_length_padding(original: np.ndarray):
     print(original.shape)
     print(patch.shape)
     return np.concatenate((original, patch))
+
+
+def one_hot_encoder(num_classes: int):
+    one_hot = {}
+    for i in range(num_classes):
+        code = np.zeros([1, num_classes])
+        code[0, num_classes - 1 - i] = 1
+        one_hot[i] = code
+    return one_hot
