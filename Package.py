@@ -16,3 +16,12 @@ def one_hot_encoder(num_classes: int):
         code[0, num_classes - 1 - i] = 1
         one_hot[i] = code
     return one_hot
+
+
+def get(x: np.ndarray, y: np.ndarray, batch_szie):
+    # x: dataset, dimension [num_samples,1062,1000]
+    # y: labels, dimension [num_samples,1]
+    num_samples = x.shape[0]
+    random_seq = np.random.permutation(np.array(range(num_samples)))
+    idx = random_seq[batch_szie]
+    return x[idx], y[idx]
