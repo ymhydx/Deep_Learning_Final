@@ -18,7 +18,7 @@ def one_hot_encoder(num_classes: int):
     return one_hot
 
 
-def get(x: np.ndarray, y: np.ndarray, batch_szie):
+def get(x: np.ndarray, y: np.ndarray, batch_szie: int):
     # x: dataset, dimension [num_samples,1062,1000]
     # y: labels, dimension [num_samples,1]
     num_samples = x.shape[0]
