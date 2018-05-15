@@ -2,20 +2,19 @@ import numpy as np
 
 
 # pad each video to the same length (maximum length)
-def maximum_length_padding(original: np.ndarray):
-    maximum_length = 1062
-    patch = np.zeros([maximum_length - original.shape[0], 1000])
-    print(original.shape)
-    print(patch.shape)
-    return np.concatenate((original, patch))
+def subsample(original: np.ndarray, aim: int):
+    length = original.shape[0]
+    step = int(length / aim)
+    indexs = [step * x for x in range(aim)]
+    return original[indexs]
 
 
 # one-hot encoding
 def one_hot_encoder(num_classes: int):
     one_hot = {}
     for i in range(num_classes):
-        code = np.zeros([1, num_classes])
-        code[0, num_classes - 1 - i] = 1
+        code = np.zeros(num_classes)
+        code[num_classes - 1 - i] = 1
         one_hot[i] = code
     return one_hot
 
@@ -26,12 +25,12 @@ def get(x: np.ndarray, y: np.ndarray, batch_szie: int):
     # y: labels, dimension [num_samples,1]
     num_samples = x.shape[0]
     random_seq = np.random.permutation(np.array(range(num_samples)))
-    idx = random_seq[batch_szie]
+    idx = random_seq[:batch_szie]
     return x[idx], y[idx]
 
 
 # generate training set, validation set and test set
-def divide_set(set: np.ndarray):
+def split(set: np.ndarray):
     # randomize
     set = set[np.random.permutation(np.array(range(set.shape[0])))]
     # train/validation/test=50%/25%/25%
