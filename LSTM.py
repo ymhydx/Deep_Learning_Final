@@ -35,25 +35,3 @@ class LSTM:
         elif opt_type == 'sgd':
             optimizer = tf.train.GradientDescentOptimizer(learning_rate=learning_rate).minimize(loss=cross_entropy)
         return pred, optimizer, cross_entropy
-
-# test_video = np.load('./test_video.npy')
-# batch = [package.maximum_length_padding(test_video)]
-# batch = np.array(batch)
-# test_label = np.zeros([1, 51])
-# print(batch.shape)
-# print(test_label.shape)
-# print(package.one_hot_encoder(10))
-# # # demo
-# batch_size = 1
-# input_vgg = tf.placeholder(tf.float32, shape=[batch_size, 1062, 1000])  # shape=[batch_size,num_frames,features]
-# labels = tf.placeholder(tf.float32, shape=[batch_size, 51])  # shape=[batch_size, labels]
-# lstm = LSTM(input_vgg, labels, 16, 'normal', 0.1, 'adam')
-# # output, optimizer = lstm.output, lstm.optimizer
-# # print(output.shape)
-#
-# initializer = tf.global_variables_initializer()
-#
-# with tf.Session() as sess:
-#     sess.run(initializer)
-#     output, _ = sess.run([lstm.output, lstm.optimizer], feed_dict={input_vgg: batch, labels: test_label})
-#     print(output)
