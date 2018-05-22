@@ -33,9 +33,31 @@ def get(x: np.ndarray, y: np.ndarray, batch_szie: int):
 def split(set: np.ndarray):
     # randomize
     set = set[np.random.permutation(np.array(range(set.shape[0])))]
-    # train/validation/test=50%/25%/25%
-    train_num = int(set.shape[0] / 2)
+    # train/validation/test=80%/10%/10%
+    train_num = int(set.shape[0] * 0.8)
     validation_num = int((set.shape[0] - train_num) / 2)
     train_set, validation_set, test_set = set[:train_num], set[train_num:validation_num], set[
-                                                                                          validation_num:]
+        validation_num:]
     return train_set, validation_set, test_set
+
+# encode probability with one-hot
+def prob2one_hot(prob: np.ndarray):
+    for i in range(prob.shape[0]):
+        max_value = np.amax(prob[i, :])
+        for j in range(prob.shape[1]):
+            if abs(prob[i, j] - max_value) < 1e-9:
+                prob[i, j] = 1
+            else:
+                prob[i, j] = 0
+
+    return prob
+
+# calculate accuracy
+def accuracy(prediction: np.ndarray, truth: np.ndarray):
+    num = prediction.shape[0]
+    num_correct = 0
+    for i in range(num):
+        if np.array_equal(prediction[i, :], truth[i, :]):
+            num_correct += 1
+
+    return num_correct / num
