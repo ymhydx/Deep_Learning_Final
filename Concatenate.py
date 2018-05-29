@@ -3,7 +3,7 @@ import os
 import numpy as np
 
 #kept frames
-num_frames=300
+num_frames=70
 
 dataset = []
 labels = []
